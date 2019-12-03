@@ -12,27 +12,24 @@ import java.util.ArrayList;
  * @author sothis
  */
 public class Cliente {
-    private int codigo;
+    private final int codigo;
     private String nome;
     private String endereco;
     private String telefone;
-    private int status;
     private double limite;
     private ArrayList<Pedido> pedidos = new ArrayList(100);
 
-    public Cliente(int codigo, String nome, String endereco, String telefone, int status, double limite) {
+    public Cliente(int codigo, String nome, String endereco, String telefone, double limite) {
         this.codigo = codigo;
         this.nome = nome;
         this.endereco = endereco;
         this.telefone = telefone;
-        this.status = status;
         this.limite = limite;
     }
 
-    public Cliente(int codigo, String nome, int status) {
+    public Cliente(int codigo, String nome) {
         this.codigo = codigo;
         this.nome = nome;
-        this.status = status;
     }
 
     public int getCodigo() {
@@ -63,14 +60,6 @@ public class Cliente {
         this.telefone = telefone;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public double getLimite() {
         return limite;
     }
@@ -90,5 +79,17 @@ public class Cliente {
     public void addPedido(Pedido pedido) {
         this.pedidos.add(pedido);
     }
+
+    @Override
+    public String toString() {
+        return "Cliente: " + 
+                "\n\tCódigo: " + codigo + 
+                "\n\tNome: " + nome + 
+                "\n\tEndereço: " + endereco + 
+                "\n\tTelefone: " + telefone + 
+                "\n\tLimite: " + limite;
+    }
+    
+    
     
 }

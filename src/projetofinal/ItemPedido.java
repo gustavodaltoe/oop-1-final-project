@@ -10,7 +10,7 @@ package projetofinal;
  * @author sothis
  */
 public class ItemPedido {
-    private int numero;
+    private final int numero;
     private int quantidade;
     private Produto produto;
 

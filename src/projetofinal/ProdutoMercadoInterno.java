@@ -9,10 +9,11 @@ package projetofinal;
  *
  * @author sothis
  */
-public class ProdutoMercadoInterno {
+public class ProdutoMercadoInterno extends Produto {
     private boolean incentivo;
 
-    public ProdutoMercadoInterno(boolean incentivo) {
+    public ProdutoMercadoInterno(int codigo, String nome, Categoria categoria, double preco, String moeda, double imposto, boolean incentivo) {
+        super(codigo, nome, categoria, preco, moeda, imposto);
         this.incentivo = incentivo;
     }
 

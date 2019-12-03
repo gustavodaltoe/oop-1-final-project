@@ -14,10 +14,10 @@ public class Produto {
     private String nome;
     private Categoria categoria;
     private double preco;
-    private int moeda;
+    private String moeda;
     private double imposto;
 
-    public Produto(int codigo, String nome, Categoria categoria, double preco, int moeda, double imposto) {
+    public Produto(int codigo, String nome, Categoria categoria, double preco, String moeda, double imposto) {
         this.codigo = codigo;
         this.nome = nome;
         this.categoria = categoria;
@@ -30,6 +30,7 @@ public class Produto {
         this.codigo = codigo;
         this.nome = nome;
         this.preco = preco;
+        this.moeda = "R$";
         this.imposto = imposto;
     }
 
@@ -61,11 +62,11 @@ public class Produto {
         this.preco = preco;
     }
 
-    public int getMoeda() {
+    public String getMoeda() {
         return moeda;
     }
 
-    public void setMoeda(int moeda) {
+    public void setMoeda(String moeda) {
         this.moeda = moeda;
     }
 
@@ -75,6 +76,16 @@ public class Produto {
 
     public void setImposto(double imposto) {
         this.imposto = imposto;
+    }
+
+    @Override
+    public String toString() {
+        return "\n --- Produto ---"
+                + "\nCódigo: " + codigo
+                + "\nNome: " + nome
+                + "\nCategoria: " + categoria.getDescricao()
+                + "\nPreço: " + moeda + " " + preco
+                + "\nImposto: " + imposto + "\n---------------\n";
     }
     
     

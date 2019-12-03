@@ -10,10 +10,20 @@ package projetofinal;
  * @author sothis
  */
 public class Categoria {
+    private int codigo;
     private String descricao;
 
-    public Categoria(String descricao) {
+    public Categoria(int codigo, String descricao) {
+        this.codigo = codigo;
         this.descricao = descricao;
+    }
+
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
     }
 
     public String getDescricao() {
@@ -22,6 +32,11 @@ public class Categoria {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    @Override
+    public String toString() {
+        return "Código: " + codigo + "\t Descrição: " + descricao;
     }
     
 }

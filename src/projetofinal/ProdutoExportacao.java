@@ -9,10 +9,11 @@ package projetofinal;
  *
  * @author sothis
  */
-public class ProdutoExportacao {
+public class ProdutoExportacao extends Produto {
     private String destino;
 
-    public ProdutoExportacao(String destino) {
+    public ProdutoExportacao(int codigo, String nome, Categoria categoria, double preco, String moeda, double imposto, String destino) {
+        super(codigo, nome, categoria, preco, moeda, imposto);
         this.destino = destino;
     }
 
