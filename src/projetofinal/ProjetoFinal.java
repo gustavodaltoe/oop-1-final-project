@@ -61,7 +61,7 @@ public class ProjetoFinal {
                     }
                     break;
                 case 2:
-                    
+
                     break;
                 case 3:
                     
@@ -105,26 +105,31 @@ public class ProjetoFinal {
     }
     
     public static void manutClientes(HashMap<Integer, Cliente> clientes, int op) {
+        int cod;
+        String nome, endereco, telefone, lim;
+        double limite;
+        
         Scanner sc = new Scanner(System.in);
         sc.useDelimiter("\n");
+        
         switch(op) {
             case 1:
                 System.out.println("\n ---- Cadastro de Cliente ---- \n");
                 System.out.print("Código: ");
-                int cod = Integer.parseInt(sc.next());
+                cod = Integer.parseInt(sc.next());
                 if (clientes.containsKey(cod)) {
                     System.out.println("Erro: Já existe um cliente com este código.");
                     break;
                 }
                 System.out.print("Nome: ");
-                String nome = sc.next();
+                nome = sc.next();
                 System.out.print("Endereço: ");
-                String endereco = sc.next();
+                endereco = sc.next();
                 System.out.print("Telefone: ");
-                String telefone = sc.next();
+                telefone = sc.next();
                 System.out.print("Limite: ");
-                String lim = sc.next();
-                double limite = 0;
+                lim = sc.next();
+                limite = 0;
                 if (!lim.isEmpty())
                     limite = Double.parseDouble(lim);
                 Cliente cliente = new Cliente(cod, nome, endereco, telefone, limite);
@@ -214,32 +219,37 @@ public class ProjetoFinal {
     }
     
     public static void manutProdutos(HashMap<Integer, Produto> produtos, HashMap<Integer, Categoria> categorias, int op) {
+        int cod, codCategoria;
+        Categoria cat;
+        String nome, moeda;
+        double imposto, preco;
+        
         Scanner sc = new Scanner(System.in);
         sc.useDelimiter("\n");
         switch(op) {
             case 1:
                 System.out.println("\n ---- Cadastro de Produto ---- \n");
                 System.out.print("Código: ");
-                int cod = Integer.parseInt(sc.next());
+                cod = Integer.parseInt(sc.next());
                 if (produtos.containsKey(cod)) {
                     System.out.println("Erro: Já existe um produto com este código.");
                     break;
                 }
                 System.out.print("Categoria: ");
-                int categoria = Integer.parseInt(sc.next());
-                if (!categorias.containsKey(categoria)) {
+                codCategoria = Integer.parseInt(sc.next());
+                if (!categorias.containsKey(codCategoria)) {
                     System.out.println("Erro: Categoria não encontrada");
                     break;
                 }
-                Categoria cat = categorias.get(categoria);
+                cat = categorias.get(codCategoria);
                 System.out.print("Nome: ");
-                String nome = sc.next();
+                nome = sc.next();
                 System.out.print("Preço: ");
-                double preco = Double.parseDouble(sc.next());
+                preco = Double.parseDouble(sc.next());
                 System.out.print("Moeda: ");
-                String moeda = sc.next();
+                moeda = sc.next();
                 System.out.print("Imposto: ");
-                double imposto = Double.parseDouble(sc.next());
+                imposto = Double.parseDouble(sc.next());
                 
                 Produto prod = new Produto(cod, nome, cat, preco, moeda, imposto);
                 produtos.put(cod, prod);
@@ -282,12 +292,12 @@ public class ProjetoFinal {
                 System.out.print("Nome: ");
                 nome = sc.next();
                 System.out.print("Categoria: ");
-                categoria = Integer.parseInt(sc.next());
-                if (!categorias.containsKey(categoria)) {
+                codCategoria = Integer.parseInt(sc.next());
+                if (!categorias.containsKey(codCategoria)) {
                     System.out.println("Erro: Categoria não encontrada");
                     break;
                 }
-                cat = categorias.get(categoria);
+                cat = categorias.get(codCategoria);
                 System.out.print("Preço: ");
                 preco = Double.parseDouble(sc.next());
                 System.out.print("Moeda: ");
@@ -336,21 +346,25 @@ public class ProjetoFinal {
     }
     
     public static void manutCategorias(HashMap<Integer, Categoria> categorias, int op) {
+        int cod;
+        String nome;
+        Categoria cat;
+        
         Scanner sc = new Scanner(System.in);
         sc.useDelimiter("\n");
         switch(op) {
             case 1:
                 System.out.println("\n ---- Cadastro de Categoria ---- \n");
                 System.out.print("Código:");
-                int cod = Integer.parseInt(sc.next());
+                cod = Integer.parseInt(sc.next());
                 if (categorias.containsKey(cod)) {
                     System.out.println("Erro: Já uma categoria com este codigo.");
                     break;
                 }
                 System.out.print("Descrição:");
-                String nome = sc.next();
+                nome = sc.next();
                 
-                Categoria cat = new Categoria(cod, nome);
+                cat = new Categoria(cod, nome);
                 categorias.put(cod, cat);
                 
                 System.out.println("Categoria cadastrada com sucesso.");
