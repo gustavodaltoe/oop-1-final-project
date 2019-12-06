@@ -5,9 +5,12 @@
         <group>
             <file>file:/home/sothis/NetBeansProjects/ProjetoFinal/src/projetofinal/ProdutoMercadoInterno.java</file>
             <file>file:/home/sothis/NetBeansProjects/ProjetoFinal/src/projetofinal/Categoria.java</file>
+            <file>file:/home/sothis/NetBeansProjects/ProjetoFinal/src/projetofinal/Pedido.java</file>
             <file>file:/home/sothis/NetBeansProjects/ProjetoFinal/src/projetofinal/ProdutoExportacao.java</file>
+            <file>file:/home/sothis/NetBeansProjects/ProjetoFinal/src/projetofinal/ItemPedido.java</file>
             <file>file:/home/sothis/NetBeansProjects/ProjetoFinal/src/projetofinal/ProjetoFinal.java</file>
             <file>file:/home/sothis/NetBeansProjects/ProjetoFinal/src/projetofinal/Produto.java</file>
+            <file>file:/home/sothis/NetBeansProjects/ProjetoFinal/src/projetofinal/Cliente.java</file>
         </group>
     </open-files>
 </project-private>

@@ -5,9 +5,8 @@
  */
 package projetofinal;
 
-import java.io.Console;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Scanner;
 
 /**
@@ -28,14 +27,15 @@ public class ProjetoFinal {
         HashMap<Integer, Produto> produtos = new HashMap(100);
         HashMap<Integer, Categoria> categorias = new HashMap(50);
         
-        clientes.put(1, new Cliente(1, "teste", "av teste", "111111", 200));
-        categorias.put(1, new Categoria(1, "categoria teste"));
-        produtos.put(1, new Produto(1, "prod teste", categorias.get(1), 50, "R$", 5));
-        
         do
         {
             printMenu();
-            op = Integer.parseInt(sc.next());
+            try {
+                op = Integer.parseInt(sc.next());
+            } catch(Exception e) {
+                System.out.println("Opção inválida.");
+                op = 0; 
+            }
             switch(op) {
                 case 1:
                     printManutencao();
@@ -61,18 +61,40 @@ public class ProjetoFinal {
                     }
                     break;
                 case 2:
-
+                    criarPedido(pedidos, produtos, clientes);
                     break;
                 case 3:
-                    
+                    System.out.println("\n---- Listar pedidos de cliente ----\n");
+                    System.out.print("Código do cliente: ");
+                    int codCli = Integer.parseInt(sc.next());
+                    if (clientes.containsKey(codCli)) {
+                        Cliente cli = clientes.get(codCli);
+                        ArrayList<Pedido> cliPedidos = cli.getPedidos();
+                        System.out.println("Nome: " + cli.getNome() + "\n");
+                        for(Pedido p : cliPedidos) {
+                            System.out.println("---- Pedido " + p.getNumero() + " -----");
+                            System.out.println("Valor: R$ " + p.totalPedido()
+                                    + " \tStatus: " + p.getStatus()
+                                    + " \tData: " + p.getData().toString());
+                        }
+                    } else {
+                        System.out.println("\nCliente não encontrado.\n");
+                    }
                     break;
                 case 4:
-                    
+                    System.out.println("\n---- Dar baixa em um pedido ----\n");
+                    System.out.print("Número do pedido: ");
+                    int numPed = Integer.parseInt(sc.next());
+                    if (pedidos.containsKey(numPed)) {
+                        baixaPedido(pedidos.get(numPed));
+                    } else {
+                        System.out.println("\nPedido não encontrado.\n");
+                    }
                     break;
-                default:
+                case 5:
                     System.exit(0);
             }
-        } while (op != 5);
+        } while (true);
     }
     
     public static void printMenu() {
@@ -102,6 +124,103 @@ public class ProjetoFinal {
         System.out.println("[5] Listar");
         System.out.println("[6] Cancelar");
         System.out.print("Opção: ");
+    }
+    
+    public static void criarPedido(HashMap<Integer, Pedido> pedidos, HashMap<Integer, Produto> produtos, HashMap<Integer, Cliente> clientes) {
+        int numPedido, codProd, op = 0, quantidade, qtdItens = 0;
+        Pedido pedido;
+        Produto produto;
+        Cliente cli;
+        String charOp;
+        
+        Scanner sc = new Scanner(System.in);
+        sc.useDelimiter("\n");
+        
+        System.out.println("\n---- Novo Pedido ----\n");
+        
+        for(;;) {
+            System.out.print("Número ([-1] para voltar): ");
+            numPedido = Integer.parseInt(sc.next());
+            
+            if (numPedido == -1)
+                return;
+            
+            if (pedidos.containsKey(numPedido))
+                System.out.println("\nO número do pedido já foi registrado.\n");
+            else
+                break;
+        }
+        
+        for(;;) {
+            System.out.print("Código cliente ([-1] para voltar): ");
+            int numCli = Integer.parseInt(sc.next());
+            
+            if (numCli == -1)
+                return;
+            
+            if (!clientes.containsKey(numCli)) {
+                System.out.println("\nCliente não encontrado.\n");
+            } else {
+                cli = clientes.get(numCli);
+                break;
+            }
+        }
+        pedido = new Pedido(numPedido, cli);
+        
+        while(op != 2) {
+            System.out.println("\n[1] Incluir item");
+            System.out.println("[2] Finalizar pedido");
+            System.out.print("Opção: ");
+            op = Integer.parseInt(sc.next());
+            
+            if (op == 2)
+                break;
+            
+            System.out.print("Incluir item (cod produto): ");
+            codProd = Integer.parseInt(sc.next());
+            if (!produtos.containsKey(codProd)) {
+                System.out.println("\nO produto não foi encontrado.\n");
+                break;
+            } else {
+                produto = produtos.get(codProd);
+                System.out.print("Quantidade: ");
+                quantidade = Integer.parseInt(sc.next());
+                ItemPedido item = new ItemPedido(++qtdItens, quantidade, produto);
+                if (cli.getLimite() >= item.totalItem()) {
+                    pedido.addItem(item);
+                    cli.setLimite(cli.getLimite() - item.totalItem());
+                } else {
+                    System.out.println("Limite do cliente insuficiente."
+                            + "\nLimite: " + cli.getLimite()
+                            + " \tValor: " + item.totalItem());
+                }
+            }    
+        }
+        cli.addPedido(pedido);
+        pedidos.put(numPedido, pedido);
+        System.out.println("\nPedido cadastrado com sucesso.");
+        System.out.println("\nTotal: " + "R$ " + pedido.totalPedido());
+        System.out.println("\nDeseja dar baixa no pedido? <S/N>");
+        System.out.print("Opção: ");
+        charOp = sc.next();
+        if (charOp.equals("S") || charOp.equals("s")) {
+            baixaPedido(pedido);
+        }
+    }
+    
+    public static void baixaPedido(Pedido pedido) {
+        Scanner sc = new Scanner(System.in);
+        String op;
+        
+        System.out.println(pedido.toString());
+        System.out.println("Tem certeza que deseja dar baixa no pedido? <S/N>");
+        op = sc.next();
+        if (op.equals("S") || op.equals("s")) {
+            pedido.setStatus(1);
+            Cliente cli = pedido.getCliente(); 
+            cli.setLimite(cli.getLimite() + pedido.totalPedido());
+            System.out.println("\nBaixa no pedido realizada com sucesso.");
+        }
     }
     
     public static void manutClientes(HashMap<Integer, Cliente> clientes, int op) {
@@ -169,7 +288,6 @@ public class ProjetoFinal {
                 }
                 cliente = clientes.get(cod);
                 System.out.println(cliente.toString());
-                System.out.println("Mantenha em branco para manter os valores atuais.\n");
                 System.out.print("Nome: ");
                 nome = sc.next();
                 System.out.print("Endereço: ");
@@ -288,7 +406,6 @@ public class ProjetoFinal {
                 }
                 prod = produtos.get(cod);
                 System.out.println(prod.toString());
-                System.out.println("Mantenha em branco para manter os valores atuais.\n");
                 System.out.print("Nome: ");
                 nome = sc.next();
                 System.out.print("Categoria: ");
